@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SafeChat</string>
+    <string name="title_activity_users">Users</string>
+</resources>
