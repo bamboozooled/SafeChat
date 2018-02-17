@@ -8,7 +8,7 @@ public class User {
     private String name;
     private String email;
     private String uid;
-    private String imgUrl;
+    private String photoUrl;
 
     public User(){
 
@@ -17,7 +17,7 @@ public class User {
         this.name = name;
         this.uid = uid;
         this.email = email;
-        this.imgUrl = photoUrl;
+        this.photoUrl = photoUrl;
     }
 
     public String getName(){
@@ -33,6 +33,6 @@ public class User {
     }
 
     public String getphotoUrl(){
-        return this.imgUrl;
+        return this.photoUrl;
     }
 }
