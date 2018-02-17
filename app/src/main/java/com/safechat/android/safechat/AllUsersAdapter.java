@@ -46,7 +46,7 @@ public class AllUsersAdapter extends ArrayAdapter<User> {
         ImageView imageDone = (ImageView) listItem.findViewById(R.id.UserImage);
 
         Glide.with(getContext())
-                .load(adding.getImgUrl())
+                .load(adding.getphotoUrl())
                 .override(250,250)
                 .into(imageDone);
 

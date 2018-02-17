@@ -13,11 +13,11 @@ public class User {
     public User(){
 
     }
-    public User(String name, String email, String uid, String imgUrl){
+    public User(String name, String email, String uid, String photoUrl){
         this.name = name;
         this.uid = uid;
         this.email = email;
-        this.imgUrl = imgUrl;
+        this.imgUrl = photoUrl;
     }
 
     public String getName(){
@@ -32,7 +32,7 @@ public class User {
         return this.email;
     }
 
-    public String getImgUrl(){
+    public String getphotoUrl(){
         return this.imgUrl;
     }
 }
