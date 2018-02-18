@@ -62,6 +62,8 @@ public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
                     Glide.with(context)
                             .load(m.getMedia().getUrl())
                             .into(image);
+                } else {
+                    image.setImageDrawable(null);
                 }
                 image.setVisibility(View.VISIBLE);
             } else {
