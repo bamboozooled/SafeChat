@@ -10,10 +10,35 @@
         android:id="@+id/ChatMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
+        android:layout_above="@+id/sanitize_layout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/linearLayout"></android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/sanitize_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/sanitizing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal"
+            android:text="Sanitizing" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:indeterminate="true" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

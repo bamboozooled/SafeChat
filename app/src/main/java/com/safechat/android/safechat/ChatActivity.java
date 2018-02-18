@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,6 +48,7 @@ public class ChatActivity extends AppCompatActivity {
     User currentUser;
     RecyclerView messages;
     EditText messageView;
+    LinearLayout sanitizeLayout;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     String room;
@@ -59,6 +62,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         messageView = (EditText) findViewById(R.id.TextInput);
+        sanitizeLayout = (LinearLayout) findViewById(R.id.sanitize_layout);
 
         mAuth = FirebaseAuth.getInstance();
         storageRef = store.getReference();
@@ -166,16 +170,24 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message message = dataSnapshot.getValue(Message.class);
                 if(message.getChecked()){
+                    if(currentUser.getName().equals(message.getUserName())){
+                        sanitizeLayout.setVisibility(View.GONE);
+                    }
                     storage.add(message);
                     mAdapter.notifyDataSetChanged();
+                    messages.smoothScrollToPosition(storage.size()-1);
                 }
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Message message = dataSnapshot.getValue(Message.class);
+                if(currentUser.getName().equals(message.getUserName())){
+                    sanitizeLayout.setVisibility(View.GONE);
+                }
                 storage.add(message);
                 mAdapter.notifyDataSetChanged();
+                messages.smoothScrollToPosition(storage.size()-1);
             }
 
             @Override
@@ -198,10 +210,14 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view){
-        String currentMessage = messageView.getText().toString();
-        Message message = new Message(currentMessage, System.currentTimeMillis(), null,
-                currentUser.getName(),false);
-        mainDataBase.push().setValue(message);
+        String currentMessage = messageView.getText().toString().trim();
+        if(!TextUtils.isEmpty(currentMessage)) {
+            Message message = new Message(currentMessage, System.currentTimeMillis(), null,
+                    currentUser.getName(), false);
+            mainDataBase.push().setValue(message);
+            messageView.setText("");
+            sanitizeLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     public void uploadImage() {

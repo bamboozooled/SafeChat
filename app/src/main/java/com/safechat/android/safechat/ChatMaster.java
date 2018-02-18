@@ -31,7 +31,7 @@ public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ChatMaster.ViewHolder holder, int position) {
-        holder.bindView(messageStorage.get(position));
+        holder.bindView();
     }
 
     @Override
@@ -51,7 +51,8 @@ public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
             timestamp = (TextView) itemView.findViewById(R.id.timestamp);
         }
 
-        public void bindView(Message m){
+        public void bindView(){
+            Message m = messageStorage.get(getAdapterPosition());
             name.setText(m.getUserName());
             message.setText(m.getText());
             if(m.getMedia() != null) {
