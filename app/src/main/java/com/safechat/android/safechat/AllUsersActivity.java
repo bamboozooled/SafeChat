@@ -51,7 +51,7 @@ public class AllUsersActivity extends AppCompatActivity {
         listofUsers = (ListView) findViewById(R.id.listofusers);
         listofUsers.setAdapter(adapter);
 
-        readUsers();
+        //readUsers();
 
         listofUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,6 +96,11 @@ public class AllUsersActivity extends AppCompatActivity {
         }
     }
 
+    protected void onResume() {
+        super.onResume();
+        readUsers();
+    }
+
     public void firebaseUi()
     {
         startActivityForResult(
@@ -110,6 +115,7 @@ public class AllUsersActivity extends AppCompatActivity {
     }
 
     public void readUsers(){
+        allUsers.clear();
         ChildEventListener uniListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
