@@ -1,10 +1,16 @@
 package com.safechat.android.safechat;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -18,17 +24,19 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AllUsersActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     final int RC_SIGN_IN = 1000;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mainDataBase = database.getReference("safechat-4ca62");
     ArrayList<User> allUsers;
     ArrayList<String> userNames;
     AllUsersAdapter adapter;
     ListView listofUsers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +73,29 @@ public class AllUsersActivity extends AppCompatActivity {
             firebaseUi();
         }
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.users_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_add_email:
+                addEmail();
+                return true;
+
+            default:
+                return true;
+
+        }
+    }
+
     public void firebaseUi()
     {
         startActivityForResult(
@@ -109,5 +140,28 @@ public class AllUsersActivity extends AppCompatActivity {
         };
         DatabaseReference userReference = database.getReference("users");
         userReference.addChildEventListener(uniListener);
+    }
+
+    public void addEmail() {
+        final Dialog dialog = new Dialog(AllUsersActivity.this);
+        dialog.setContentView(R.layout.add_email_layout);
+        final EditText emailView = (EditText)dialog.findViewById(R.id.email_view);
+        Button addButton = (Button)dialog.findViewById(R.id.add);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = emailView.getText().toString().trim();
+                addEmail(email);
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
+
+    public void addEmail(String email) {
+        Map<String, String> emailMap = new HashMap<>();
+        emailMap.put("email", email);
+        DatabaseReference userReference = database.getReference("emails").child(mAuth.getCurrentUser().getUid());
+        userReference.setValue(emailMap);
     }
 }
