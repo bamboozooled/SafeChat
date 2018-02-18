@@ -86,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
         currentUser.setPhotoUrl(mUser.getPhotoUrl().toString());
 
         room = createRoomID();
+        Log.d(TAG, room);
 
         mainDataBase = database.getReference("rooms/"+room);
 
@@ -145,7 +146,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void checkRoom(){
-        ChildEventListener roomListener = new ChildEventListener() {
+        final ChildEventListener roomListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message message = dataSnapshot.getValue(Message.class);
@@ -155,7 +156,8 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                storage.clear();
+                checkRoom();
             }
 
             @Override
@@ -202,7 +204,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 String url = downloadUrl.toString();
-                String path = storageRef.getPath();
+                String path = ref2.getPath();
                 Media media = new Media(url, path, "image", true);
                 Message message = new Message("", System.currentTimeMillis(), media, currentUser.getName());
                 sendMessage(message);

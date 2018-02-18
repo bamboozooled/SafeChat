@@ -55,9 +55,11 @@ public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
             name.setText(m.getUserName());
             message.setText(m.getText());
             if(m.getMedia() != null) {
-                Glide.with(itemView.getContext())
-                        .load(m.getMedia().getUrl())
-                        .into(image);
+                if(m.getMedia().isSafe()) {
+                    Glide.with(itemView.getContext())
+                            .load(m.getMedia().getUrl())
+                            .into(image);
+                }
                 image.setVisibility(View.VISIBLE);
             }
             timestamp.setText(getTime(m.getTime()));
@@ -69,6 +71,12 @@ public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
 
             String hour = String.valueOf(c.get(Calendar.HOUR_OF_DAY));
             String minute = String.valueOf(c.get(Calendar.MINUTE));
+            if(minute.length() == 1) {
+                minute = "0" + minute;
+            }
+            if(hour.length() == 1) {
+                hour = "0" + hour;
+            }
             return hour + ":" + minute;
         }
     }
