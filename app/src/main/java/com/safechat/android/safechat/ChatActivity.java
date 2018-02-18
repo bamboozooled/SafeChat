@@ -91,6 +91,20 @@ public class ChatActivity extends AppCompatActivity {
         mainDataBase = database.getReference("rooms/"+room);
 
         messages = (RecyclerView) findViewById(R.id.ChatMain);
+        messages.addOnLayoutChangeListener(new View.OnLayoutChangeListener(){
+
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if(bottom < oldBottom) {
+                    messages.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            messages.scrollToPosition(messages.getAdapter().getItemCount() - 1);
+                        }
+                    }, 100);
+                }
+            }
+        });
 
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -150,6 +164,11 @@ public class ChatActivity extends AppCompatActivity {
         final ChildEventListener roomListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Message message = dataSnapshot.getValue(Message.class);
+                if(message.getChecked()){
+                    storage.add(message);
+                    mAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override

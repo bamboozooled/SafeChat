@@ -61,6 +61,8 @@ public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
                             .into(image);
                 }
                 image.setVisibility(View.VISIBLE);
+            } else {
+                image.setVisibility(View.GONE);
             }
             timestamp.setText(getTime(m.getTime()));
         }

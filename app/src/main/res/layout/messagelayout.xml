@@ -19,6 +19,13 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333333">
+
+        </View>
+
         <ImageView
             android:id="@+id/messageimage"
             android:layout_width="match_parent"
@@ -27,13 +34,6 @@
             android:background="@android:color/darker_gray"
             android:scaleType="fitXY"
             android:visibility="gone" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#333333">
-
-        </View>
 
         <TextView
             android:id="@+id/usertextmessage"
