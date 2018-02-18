@@ -8,16 +8,16 @@ public class Media {
     private String url;
     private String path;
     private String type;
-    private boolean isSafe;
+    private boolean safe;
 
     public Media() {
     }
 
-    public Media(String url, String path, String type, boolean isSafe){
+    public Media(String url, String path, String type, boolean safe){
         this.url = url;
         this.path = path;
         this.type = type;
-        this.isSafe = isSafe;
+        this.safe = safe;
     }
 
     public String getUrl(){
@@ -32,11 +32,11 @@ public class Media {
         return this.type;
     }
 
-    public boolean isSafe(){
-        return this.isSafe;
+    public boolean getSafe() {
+        return safe;
     }
 
-    public void setSafe(boolean value){
-        this.isSafe = value;
+    public void setSafe(boolean val){
+        this.safe = val;
     }
 }

@@ -99,6 +99,7 @@ public class ChatActivity extends AppCompatActivity {
 
         mAdapter = new ChatMaster(storage);
         messages.setAdapter(mAdapter);
+
         checkRoom();
     }
 
@@ -149,15 +150,13 @@ public class ChatActivity extends AppCompatActivity {
         final ChildEventListener roomListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Message message = dataSnapshot.getValue(Message.class);
-                storage.add(message);
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                storage.clear();
-                checkRoom();
+                Message message = dataSnapshot.getValue(Message.class);
+                storage.add(message);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -182,7 +181,7 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(View view){
         String currentMessage = messageView.getText().toString();
         Message message = new Message(currentMessage, System.currentTimeMillis(), null,
-                currentUser.getName());
+                currentUser.getName(),false);
         mainDataBase.push().setValue(message);
     }
 
@@ -206,7 +205,7 @@ public class ChatActivity extends AppCompatActivity {
                 String url = downloadUrl.toString();
                 String path = ref2.getPath();
                 Media media = new Media(url, path, "image", true);
-                Message message = new Message("", System.currentTimeMillis(), media, currentUser.getName());
+                Message message = new Message("", System.currentTimeMillis(), media, currentUser.getName(), false);
                 sendMessage(message);
             }
         }).addOnFailureListener(new OnFailureListener() {

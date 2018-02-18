@@ -9,15 +9,17 @@ public class Message {
     private Long time;
     private Media media;
     private String userName;
+    private boolean checked;
 
     public Message() {
     }
 
-    public Message(String text, Long time, Media media, String userName){
+    public Message(String text, Long time, Media media, String userName, boolean checked){
         this.text = text;
         this.time = time;
         this.media = media;
         this.userName = userName;
+        this.checked = checked;
     }
 
     public String getText(){
@@ -34,5 +36,13 @@ public class Message {
 
     public String getUserName(){
         return this.userName;
+    }
+
+    public boolean getChecked(){
+        return this.checked;
+    }
+
+    public void setChecked(boolean value){
+        this.checked = value;
     }
 }

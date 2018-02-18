@@ -55,7 +55,7 @@ public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
             name.setText(m.getUserName());
             message.setText(m.getText());
             if(m.getMedia() != null) {
-                if(m.getMedia().isSafe()) {
+                if(m.getMedia().getSafe()) {
                     Glide.with(itemView.getContext())
                             .load(m.getMedia().getUrl())
                             .into(image);
