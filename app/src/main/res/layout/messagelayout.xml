@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0084bf"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/usertextname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="#fafafa"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/messageimage"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@id/usertextname"
+            android:scaleType="fitXY"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333333">
+
+        </View>
+
+        <TextView
+            android:id="@+id/usertextmessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/messageimage"
+            android:text="Message"
+            android:textColor="#fafafa"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usertextmessage"
+            android:text="time"
+            android:textColor="#fafafa"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</RelativeLayout>

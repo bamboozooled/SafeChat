@@ -8,10 +8,16 @@ public class Message {
     private String text;
     private Long time;
     private Media media;
-    public Message(String text, Long time, Media media){
+    private String userName;
+
+    public Message() {
+    }
+
+    public Message(String text, Long time, Media media, String userName){
         this.text = text;
         this.time = time;
         this.media = media;
+        this.userName = userName;
     }
 
     public String getText(){
@@ -24,5 +30,9 @@ public class Message {
 
     public Media getMedia(){
         return this.media;
+    }
+
+    public String getUserName(){
+        return this.userName;
     }
 }

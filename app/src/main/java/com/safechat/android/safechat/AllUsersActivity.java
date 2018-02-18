@@ -1,7 +1,10 @@
 package com.safechat.android.safechat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -22,12 +25,10 @@ public class AllUsersActivity extends AppCompatActivity {
     final int RC_SIGN_IN = 1000;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mainDataBase = database.getReference("safechat-4ca62");
-
     ArrayList<User> allUsers;
     ArrayList<String> userNames;
     AllUsersAdapter adapter;
     ListView listofUsers;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,24 +42,29 @@ public class AllUsersActivity extends AppCompatActivity {
         adapter = new AllUsersAdapter(this,allUsers);
         listofUsers = (ListView) findViewById(R.id.listofusers);
         listofUsers.setAdapter(adapter);
+
+        readUsers();
+
+        listofUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(AllUsersActivity.this,ChatActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("UserSelected",allUsers.get(i));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
         if (currentUser == null){
             firebaseUi();
         }
-
-        else{
-            showAllUsers();
-        }
     }
-
-
     public void firebaseUi()
     {
         startActivityForResult(
@@ -70,10 +76,6 @@ public class AllUsersActivity extends AppCompatActivity {
                                         new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                         .build(),
                 RC_SIGN_IN);
-    }
-
-    public void showAllUsers(){
-        readUsers();
     }
 
     public void readUsers(){
@@ -105,9 +107,6 @@ public class AllUsersActivity extends AppCompatActivity {
 
             }
         };
-
-
-
         DatabaseReference userReference = database.getReference("users");
         userReference.addChildEventListener(uniListener);
     }
