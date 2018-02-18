@@ -115,7 +115,7 @@ public class ChatActivity extends AppCompatActivity {
         messages.setLayoutManager(mLayoutManager);
 
 
-        mAdapter = new ChatMaster(storage);
+        mAdapter = new ChatMaster(storage, getApplicationContext());
         messages.setAdapter(mAdapter);
 
         checkRoom();
@@ -254,5 +254,6 @@ public class ChatActivity extends AppCompatActivity {
 
     public void sendMessage(Message message) {
         mainDataBase.push().setValue(message);
+        sanitizeLayout.setVisibility(View.VISIBLE);
     }
 }

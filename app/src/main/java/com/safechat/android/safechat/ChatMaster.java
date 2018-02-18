@@ -19,9 +19,11 @@ import java.util.Calendar;
 
 public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
     ArrayList<Message> messageStorage;
+    Context context;
 
-    public ChatMaster(ArrayList<Message> messageStorage){
+    public ChatMaster(ArrayList<Message> messageStorage, Context context){
         this.messageStorage = messageStorage;
+        this.context = context;
     }
     @Override
     public ChatMaster.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -57,7 +59,7 @@ public class ChatMaster extends RecyclerView.Adapter<ChatMaster.ViewHolder> {
             message.setText(m.getText());
             if(m.getMedia() != null) {
                 if(m.getMedia().getSafe()) {
-                    Glide.with(itemView.getContext())
+                    Glide.with(context)
                             .load(m.getMedia().getUrl())
                             .into(image);
                 }
